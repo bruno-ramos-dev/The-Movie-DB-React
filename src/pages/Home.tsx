@@ -2,8 +2,12 @@ import { useEffect, useState } from "react"
 import * as Styles from "../styles/pages/Home"
 import api from "../services/api"
 import { ITop10WeeklyMovies } from "../interfaces/Home"
+import { MovieCard } from "../components/MovieCard"
+import { Loading } from "../components/Loading"
 
 export function Home() {
+
+  const [isLoading, setIsLoading] = useState(true)
 
   const [top10WeeklyMovies, settop10WeeklyMovies] = useState<ITop10WeeklyMovies[]>([])
 
@@ -12,12 +16,11 @@ export function Home() {
       settop10WeeklyMovies(
         response.data.results.slice(0, 10).map((movie: ITop10WeeklyMovies) => movie)
       )
-    }).catch(err => console.log(err))
+    }).finally(() => {
+      setIsLoading(false)
+    })
   }, [])
 
-  useEffect(() => {
-    console.log(top10WeeklyMovies)
-  }, [top10WeeklyMovies])
   
 
  return (
@@ -36,8 +39,19 @@ export function Home() {
 
      <section id="movies">
        <h3>Top 10 da semana</h3>
-       <div className="cards">
-       </div>
+        <div className="cards">
+          { isLoading ? (
+            <Loading />
+          ) : (
+              top10WeeklyMovies.map((movie) => (
+                  <MovieCard 
+                      key={movie.id} 
+                      movie={movie} 
+                      className="card"
+                  />
+              ))
+          )}
+        </div>
      </section>
    </Styles.Container>
  )
