@@ -1,6 +1,25 @@
+import { useEffect, useState } from "react"
 import * as Styles from "../styles/pages/Home"
+import api from "../services/api"
+import { ITop10WeeklyMovies } from "../interfaces/Home"
 
 export function Home() {
+
+  const [top10WeeklyMovies, settop10WeeklyMovies] = useState<ITop10WeeklyMovies[]>([])
+
+  useEffect(() => {
+    api.get("/trending/movie/week").then(response => {
+      settop10WeeklyMovies(
+        response.data.results.slice(0, 10).map((movie: ITop10WeeklyMovies) => movie)
+      )
+    }).catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    console.log(top10WeeklyMovies)
+  }, [top10WeeklyMovies])
+  
+
  return (
    <Styles.Container>
      <section id="presentation">
