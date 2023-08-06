@@ -1,11 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../services/api'
 import { useSearchParams } from 'react-router-dom'
 import * as Styles from '../styles/pages/Search'
+import { MovieCard } from '../components/MovieCard'
 
 export function Search() {
 
     const [keyword] = useSearchParams()
+
+    const [movies, setMovies] = useState([])
 
     useEffect(() => {
         api.get("/search/movie", {
@@ -14,15 +17,25 @@ export function Search() {
                 include_adults: false
             }
         }).then(response => {
-            console.log(response)
+            setMovies(response.data.results)
         })
-    }, [])
+    }, [keyword.get("keyword")])
 
     return (
         <Styles.Container>
             <section id="movies">
-                <h3>10 resultados encontrados</h3>
-                <div className="cards"></div>
+                <h3>{movies.length} resultado{movies.length > 1 ? 's' : ''} encontrado{movies.length > 1 ? 's' : ''}</h3>
+                <div className="cards">
+                    {
+                        movies.map((movie) => (
+                            <MovieCard 
+                                key={movie.id} 
+                                movie={movie} 
+                                className="card"
+                            />
+                        ))
+                    }
+                </div>
             </section>
         </Styles.Container>
     )

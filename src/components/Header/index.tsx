@@ -4,13 +4,19 @@ import { Button } from "../Button"
 import * as Styles from "./styles"
 import { Link } from "../Link"
 import { useNavigate } from "react-router-dom"
+import { FormEvent, useState } from "react"
 
 export function Header() {
 
   const navigate = useNavigate()
 
-  const handleSubmit = () => {
-    navigate("/search?keyword=test")
+  const [search, setSearch] = useState("")
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    if (search) {
+      navigate(`/search?keyword=${search}`)
+    }
   }
 
   return (
@@ -39,6 +45,8 @@ export function Header() {
         <input
           type="text"
           placeholder="Pesquise um filme"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
         />
 
         <Button style={{ borderRadius: "0 4px 4px 0" }} type="submit">Pesquisar</Button>
