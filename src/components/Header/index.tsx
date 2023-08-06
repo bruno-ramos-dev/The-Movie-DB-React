@@ -3,8 +3,16 @@ import Logo from "../../assets/logo.png"
 import { Button } from "../Button"
 import * as Styles from "./styles"
 import { Link } from "../Link"
+import { useNavigate } from "react-router-dom"
 
 export function Header() {
+
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    navigate("/search?keyword=test")
+  }
+
   return (
     <Styles.Container>
       <div>
@@ -27,7 +35,7 @@ export function Header() {
 
       </div>
 
-      <form className="search-wrapper">
+      <form className="search-wrapper" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Pesquise um filme"
