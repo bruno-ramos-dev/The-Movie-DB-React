@@ -57,7 +57,7 @@ export function Movie() {
   <Styles.Container>
     {isLoading ? (
       <div className="loading-wrapper">
-        Carregando...
+        <Loading />
       </div>
     ) : (
       <section id="presentation">
