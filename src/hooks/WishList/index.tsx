@@ -10,12 +10,25 @@ export const WishlistContext = createContext({} as IWishlistContextData)
 export function WishlistProvider(props:IWishlistProviderprops): JSX.Element {
 
   const [wishlist, setWishlist] = useState<IMovieProps[]>(() => {
-    return JSON.parse(localStorage.getItem('wishlist') || '[]')
+    const storagedFilms = localStorage.getItem("wishlist")
+
+    if (storagedFilms) {
+      return JSON.parse(storagedFilms)
+    }
+
+    return []
   })
 
   function isMovieInWishList(movieId: number): boolean  {
-    const movieFound = wishlist.find((wishlistFilm) => wishlistFilm.id === movieId)
-    return !!movieFound
+    const movieFound = wishlist.find(
+      (wishlistFilm) => wishlistFilm.id === movieId
+    )
+
+    if (movieFound) {
+      return true
+    }
+
+    return false
   }
 
   function handleAddOrRemoveMovieOnWishlist(movie: IMovieProps) {
@@ -58,3 +71,5 @@ export function WishlistProvider(props:IWishlistProviderprops): JSX.Element {
 
     return context
  }
+
+ export default WishlistContext

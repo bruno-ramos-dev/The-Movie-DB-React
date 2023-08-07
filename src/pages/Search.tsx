@@ -4,14 +4,15 @@ import { useSearchParams } from 'react-router-dom'
 import * as Styles from '../styles/pages/Search'
 import { MovieCard } from '../components/MovieCard'
 import { Loading } from '../components/Loading'
+import { useWishList } from '../hooks/WishList'
+import { IMovieRequestProps } from '../interfaces/Movie'
 
 export function Search() {
 
+    const { isMovieInWishList, handleAddOrRemoveMovieOnWishlist } = useWishList()
     const [isLoading, setIsLoading] = useState(true)
-
     const [keyword] = useSearchParams()
-
-    const [movies, setMovies] = useState([])
+    const [movies, setMovies] = useState<IMovieRequestProps[]>([])
 
     useEffect(() => {
         api.get("/search/movie", {
@@ -37,7 +38,9 @@ export function Search() {
                         movies.map((movie) => (
                             <MovieCard 
                                 key={movie?.id} 
-                                movie={movie} 
+                                movie={movie}
+                                inWishlist={ isMovieInWishList(movie.id) }
+                                handleAddMovieOnWishlist={() => handleAddOrRemoveMovieOnWishlist(movie)} 
                                 className="card"
                             />
                         ))
