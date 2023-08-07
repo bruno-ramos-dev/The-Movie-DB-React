@@ -5,14 +5,15 @@ import * as Styles from "./styles"
 import { Link } from "../Link"
 import { useNavigate } from "react-router-dom"
 import { FormEvent, useState } from "react"
+import { useWishList } from "../../hooks/WishList"
 
 export function Header() {
 
   const navigate = useNavigate()
-
   const [search, setSearch] = useState("")
+  const { wishlist } = useWishList()
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSearch = (event: FormEvent) => {
     event.preventDefault()
     if (search) {
       navigate(`/search?keyword=${search}`)
@@ -36,12 +37,12 @@ export function Header() {
         </Link>
         <Link to="/wishlist">
           <FaBars />
-          Minha lista
+          Minha lista ({wishlist.length})
         </Link>
 
       </div>
 
-      <form className="search-wrapper" onSubmit={handleSubmit}>
+      <form className="search-wrapper" onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Pesquise um filme"
