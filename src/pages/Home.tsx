@@ -4,12 +4,13 @@ import api from "../services/api"
 import { ITop10WeeklyMovies } from "../interfaces/Home"
 import { MovieCard } from "../components/MovieCard"
 import { Loading } from "../components/Loading"
+import { useWishList } from "../hooks/WishList"
 
 export function Home() {
 
   const [isLoading, setIsLoading] = useState(true)
-
   const [top10WeeklyMovies, settop10WeeklyMovies] = useState<ITop10WeeklyMovies[]>([])
+  const { handleAddOrRemoveMovieOnWishlist, isMovieInWishList } = useWishList()
 
   useEffect(() => {
     api.get("/trending/movie/week").then(response => {
@@ -47,6 +48,8 @@ export function Home() {
                   <MovieCard 
                       key={movie.id} 
                       movie={movie} 
+                      handleAddMovieOnWishlist={handleAddOrRemoveMovieOnWishlist}
+                      inWishlist={isMovieInWishList(movie.id)}
                       className="card"
                   />
               ))
