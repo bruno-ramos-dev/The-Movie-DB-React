@@ -61,8 +61,11 @@ export function Movie() {
       <section id="presentation">
         <div className="movie-poster-wrapper">
           {movie?.poster_path ? (
-            <img src={`${import.meta.env.VITE_THE_MOVIE_DB_IMAGES_URL}${movie?.poster_path}`} alt={`Capa do filme ${movie?.title}`}
-            />) : (
+            <a href={movie?.homepage} target="_blank">
+              <img src={`${import.meta.env.VITE_THE_MOVIE_DB_IMAGES_URL}${movie?.poster_path}`} alt={`Capa do filme ${movie?.title}`}
+              />
+            </a>
+            ) : (
             <>
               <FiCameraOff />
               <p>Capa indisponível</p>
@@ -71,7 +74,9 @@ export function Movie() {
 
         <div className="about">
           <div>
-            <h1>{movie?.title}</h1>
+            <a href={movie?.homepage} target="_blank"> 
+              <h1>{movie?.title}</h1>
+            </a>
 
             <h4>
             {movie?.genres
@@ -90,6 +95,9 @@ export function Movie() {
           <footer>
             <p>
               Avaliação geral: <span>{movie?.vote_average.toFixed(1)}</span>
+            </p>
+            <p>
+              Numero de votos: <span>{movie?.vote_count}</span>
             </p>
 
             <div className="actions">

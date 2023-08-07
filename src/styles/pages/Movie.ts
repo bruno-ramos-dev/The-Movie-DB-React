@@ -67,6 +67,11 @@ export const Container = styled.div`
         p {
           margin-top: 2rem;
         }
+
+        a {
+          text-decoration: none;
+          color: currentColor;
+        }
       }
 
       footer {
