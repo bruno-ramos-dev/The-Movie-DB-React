@@ -1,10 +1,11 @@
 import { MovieCard } from "../components/MovieCard"
-
+import { useWishList } from "../hooks/WishList"
 import { IMovieRequestProps } from "../interfaces/Movie"
-
 import * as Styles from "../styles/pages/Wishlist"
 
 export function WishList() {
+
+  const { wishList } = useWishList()
   
   const movie : IMovieRequestProps = {"genres":[{"id":18,"name":"Drama"}],
   "homepage":"http://www.foxmovies.com/movies/fight-club","id":550,

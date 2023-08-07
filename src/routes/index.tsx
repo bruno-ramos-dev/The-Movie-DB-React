@@ -13,7 +13,7 @@ export function AppRoutes() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/search" element={<Search />} />
-                <Route path="/movie" element={<Movie />} />
+                <Route path="/movie/:id" element={<Movie />} />
                 <Route path="/wishlist" element={<WishList />} />
             </Routes>
         </BrowserRouter>
